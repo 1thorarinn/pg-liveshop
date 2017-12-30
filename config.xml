@@ -15,13 +15,13 @@
         Thorarinn Tomasson
     </author>
     <platform name="android">
-    <icon src="/ic_launcher/res/mipmap-mdpi/ic_launcher.png" platform="android" qualifier="ldpi" />
-    <icon src="/ic_launcher/res/mipmap-mdpi/ic_launcher.png" platform="android" qualifier="mdpi" />
-    <icon src="/ic_launcher/res/mipmap-hdpi/ic_launcher.png" platform="android" qualifier="hdpi" />
-    <icon src="/ic_launcher/res/mipmap-xhdpi/ic_launcher.png" platform="android" qualifier="xhdpi" />
-    <icon src="/ic_launcher/res/mipmap-xxhdpi/ic_launcher.png" platform="android" qualifier="xxhdpi" />
-    <icon src="/ic_launcher/res/mipmap-xxxhdpi/ic_launcher.png" platform="android" qualifier="xxxhdpi" />
-    <icon src="/ic_launcher/res/mipmap-fr-xxhdpi/ic_launcher.png" platform="android" qualifier="fr-xxhdpi" />
+    <icon src="ic_launcher/res/mipmap-mdpi/ic_launcher.png" platform="android" qualifier="ldpi" />
+    <icon src="ic_launcher/res/mipmap-mdpi/ic_launcher.png" platform="android" qualifier="mdpi" />
+    <icon src="ic_launcher/res/mipmap-hdpi/ic_launcher.png" platform="android" qualifier="hdpi" />
+    <icon src="ic_launcher/res/mipmap-xhdpi/ic_launcher.png" platform="android" qualifier="xhdpi" />
+    <icon src="ic_launcher/res/mipmap-xxhdpi/ic_launcher.png" platform="android" qualifier="xxhdpi" />
+    <icon src="ic_launcher/res/mipmap-xxxhdpi/ic_launcher.png" platform="android" qualifier="xxxhdpi" />
+    <icon src="ic_launcher/res/mipmap-fr-xxhdpi/ic_launcher.png" platform="android" qualifier="fr-xxhdpi" />
     </platform>
 
 
