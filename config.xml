@@ -5,10 +5,10 @@
         versionCode = "1"
         version     = "1.0.0" >
 
-    <name>Jquery mobile app</name>
+    <name>Liveshop</name>
 
     <description>
-        An example for phonegap build docs.
+        Live customer interaction
     </description>
 
     <author href="http://offorsi.is" email="thorarinnt@tmsoftware.is">
