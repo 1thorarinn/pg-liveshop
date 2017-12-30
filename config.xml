@@ -24,8 +24,7 @@
     <icon src="/ic_launcher/res/mipmap-fr-xxhdpi/ic_launcher.png" platform="android" qualifier="fr-xxhdpi" />
     </platform>
 
-    <plugin name="org.apache.cordova.splashscreen" spec="0.2.7" source="pgb" />
-    <preference name="splashscreen" value="foo" />
+
     <plugin name="cordova-plugin-whitelist" />
     <access origin="*" />
 </widget>
