@@ -76,7 +76,7 @@
        // $.postCORS = function(url, data, func) { if(func == undefined) func = function(){}; return $.ajax({ type: 'POST', url: url, data: data, dataType: 'json', contentType: 'application/x-www-form-urlencoded', xhrFields: { withCredentials: true }, success: function(res) { func(res) }, error: function() { func({}) }}); }
 
         var request = {
-            url:  'https://tmstesting.wpengine.com/wp-json/wc/v2/orders',  // 'http://wp-liveshop.test/wp-json/wc/v2/orders',
+            url:  'http://tmstesting.wpengine.com/wp-json/wc/v2/orders',  // 'http://wp-liveshop.test/wp-json/wc/v2/orders',
             method: 'GET'
         };
     //ck  ck_3e357ca68866da37a12af701807767d99f2e022f
@@ -92,9 +92,7 @@
         //OAuth Protocol authentication parameters
         var oauth = new OAuth({
             consumer: {
-                //Consumer Public Key
                 public: 'ck_3e357ca68866da37a12af701807767d99f2e022f',
-                //Consumer Secrete Key
                 secret: 'cs_d50edc8e59caf8dd078c8323af188129dcb589b5'
             },
             //oauth1.0a protocol signature method
@@ -110,7 +108,7 @@
             oauth_signature_method: oauth.signature_method,
             oauth_timestamp: oauth.getTimeStamp()
         };
-
+        //console.log(oauth_data);
         //Oauth signature
         oauth_data.oauth_signature =  oauthSignature.generate(request.method,request.url,
             oauth_data,oauth.consumer.secret );
