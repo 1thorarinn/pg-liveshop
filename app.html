@@ -76,17 +76,23 @@
        // $.postCORS = function(url, data, func) { if(func == undefined) func = function(){}; return $.ajax({ type: 'POST', url: url, data: data, dataType: 'json', contentType: 'application/x-www-form-urlencoded', xhrFields: { withCredentials: true }, success: function(res) { func(res) }, error: function() { func({}) }}); }
 
         var request = {
-            url: 'http://wp-liveshop.test/wp-json/wc/v2/orders',
+            url:  'https://tmstesting.wpengine.com/wp-json/wc/v2/orders',  // 'http://wp-liveshop.test/wp-json/wc/v2/orders',
             method: 'GET'
         };
-
+    //ck  ck_3e357ca68866da37a12af701807767d99f2e022f
+    // cs cs_d50edc8e59caf8dd078c8323af188129dcb589b5
         //OAuth Protocol authentication parameters
         var oauth = new OAuth({
             consumer: {
-                //Consumer Public Key
+               /* //Consumer Public Key
                 public: 'ck_b5610e27512d8e0fc8adb9eb408fb94f13aa7d7f',
                 //Consumer Secrete Key
                 secret: 'cs_7548b1bd67b5679bfa4e340ccd0e51baf8124fcc'
+                */
+                public: 'ck_3e357ca68866da37a12af701807767d99f2e022f',
+                //Consumer Secrete Key
+                secret: 'cs_d50edc8e59caf8dd078c8323af188129dcb589b5'
+
             },
             //oauth1.0a protocol signature method
             signature_method: 'HMAC-SHA1',
@@ -183,7 +189,8 @@
         });
 
         request.fail(function( jqXHR, textStatus ) {
-            alert( "Request failed: " + textStatus );
+            console.log(jqXHR);
+            alert( "Request failed: " + textStatus);
         });
 
 
