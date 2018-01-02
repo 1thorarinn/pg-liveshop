@@ -54,8 +54,10 @@
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
-        <p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>
-        <p><a href="#foo">Back to foo</a></p>
+        <!--<p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>
+        <p><a href="#foo">Back to foo</a></p> -->
+        <ul id="questionsListView" data-role="listview" data-inset="false">
+        </ul>
     </div><!-- /content -->
 
     <div data-role="footer" data-id="footer1" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed fade ui-fixed-overlay">
@@ -69,16 +71,22 @@
 </div><!-- /page -->
 
 <script>
-    $(document).ready(function(){
+    // code for individual page load in jq mobile
+    // https://www.gajotres.net/document-onpageinit-vs-document-ready/
 
-       // $.postCORS = function(url, data, func) { if(func == undefined) func = function(){}; return $.ajax({ type: 'POST', url: url, data: data, dataType: 'json', contentType: 'application/x-www-form-urlencoded', xhrFields: { withCredentials: true }, success: function(res) { func(res) }, error: function() { func({}) }}); }
+    $(document).on('pageshow', '#orders' ,function(){
+        // $.postCORS = function(url, data, func) { if(func == undefined) func = function(){}; return $.ajax({ type: 'POST', url: url, data: data, dataType: 'json', contentType: 'application/x-www-form-urlencoded', xhrFields: { withCredentials: true }, success: function(res) { func(res) }, error: function() { func({}) }}); }
+
+
+        // http://tmstesting.wpengine.com/wp-json/wc/v2/orders?oauth_consumer_key=ck_3e357ca68866da37a12af701807767d99f2e022f&oauth_nonce=ODfCSRdeDL0ehmONLL76RROyBERs5s13&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1514908403&oauth_signature=rBbg%252Ffh4p23KIBzbyUQ6m0Ba%252BmI%253D
+
 
         var request = {
             url:  'http://tmstesting.wpengine.com/wp-json/wc/v2/orders',  // 'http://wp-liveshop.test/wp-json/wc/v2/orders',
             method: 'GET'
         };
-    //ck  ck_3e357ca68866da37a12af701807767d99f2e022f
-    // cs cs_d50edc8e59caf8dd078c8323af188129dcb589b5
+        //ck  ck_3e357ca68866da37a12af701807767d99f2e022f
+        // cs cs_d50edc8e59caf8dd078c8323af188129dcb589b5
 
         /* //Consumer Public Key
                 public: 'ck_b5610e27512d8e0fc8adb9eb408fb94f13aa7d7f',
@@ -142,12 +150,12 @@
 
                 $('#addMoreStuff').append(
                     '<li data-role="collapsible" data-iconpos="right" data-inset="false" data-collapsed="false">' +
-                     '<h2>'+
+                    '<h2>'+
                     val.order_key +
                     '</h2>'+
                     '<ul data-role="listview">'+
-                        '<li data-role="collapsible" data-collapsed="false"  data-inset="false">'+
-                        '<ul data-role="listview" >' +
+                    '<li data-role="collapsible" data-collapsed="false"  data-inset="false">'+
+                    '<ul data-role="listview" >' +
                     '<li>'+
                     '<strong>' +  val.billing.first_name + ' ' + val.billing.last_name + '</strong>' + '<br>' +
                     val.billing.address_1 + ' ' + val.billing.address_2 + '<br>' +
@@ -157,16 +165,16 @@
                     'Email: ' + val.billing.email + '<br>' +
                     'Sími: ' +  val.billing.phone +
                     '</li>'+
-'<li>'+
+                    '<li>'+
                     items +
-                        '</li>'+
+                    '</li>'+
                     '</ul>' +
-                        '</li>'+
+                    '</li>'+
 
 
                     '</ul>'+
 
-                     '</li>'
+                    '</li>'
                 ).trigger('create');
                 /*
 
@@ -191,6 +199,53 @@
             console.log(jqXHR);
             alert( "Request failed: " + textStatus);
         });
+    });
+
+    $(document).on('pageshow', '#questions' ,function(){
+
+       // https://tmstesting.wpengine.com/wp-json/liveshop/v2/questions
+
+        $.ajax({
+            url: 'http://tmstesting.wpengine.com/wp-json/liveshop/v2/questions',
+            method: 'GET',
+            crossDomain: true,
+
+            //     context: document.body,
+
+        }).done(function(data) {
+            //$( this ).addClass( "done" );
+            //document.write( 'There was an error attempting to access the API - ' + data.status + ': ' + data.response );
+            console.log(data);
+            $.each( data, function( i, item ) {
+               // $.each( item, function( it, val ) {
+
+                $('#questionsListView').append(
+                    '<li data-role="collapsible" data-iconpos="right" data-inset="false" data-collapsed="false">' +
+                    '<h2>'+
+                    item["1"] +
+                    '</h2>'+
+                    '<ul data-role="listview">'+
+                    '<li data-inset="false">'+
+                    '<p><strong>'+ item["3.3"] + ' ' + item["3.6"] + '</strong></p>' +
+                        '<p>' + item["4"] + '</p>' +
+                     '</li>'   +
+                        '</ul>'+
+                    '</li>'
+                ).trigger('create');
+          //      });
+
+            });
+
+            // $('#questionsListView');
+        });
+
+
+
+    });
+
+    $(document).ready(function(){
+
+
 
 
 
