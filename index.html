@@ -2,10 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+    <style> .tab {
+        /* width: 5% !important; */
+        clear: none !important;  /* Prevent line break */
+    }
+    </style>
 </head>
+
+
 <body>
-    <h1>Hello</h1>
-    <p>dfsdfsdf sfds dfs dsf sd </p>
+<div data-role="page" id="loginPage">
+    <div data-role="header">
+        <h1>Login</h1>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+        <input id="email" type="email" placeholder="email@domain.com" />
+        <input id="password" type="password" placeholder="password" />
+        <button id="login">Login</button>
+    </div><!-- /content -->
+
+</div>
+
+
+<script>
+    $(document).ready(function(){
+
+
+
+
+
+        $("#login").click(function(){
+        var url = 'http://php-liveshop.test/';
+        var email=$("#email").val();
+        var password=$("#password").val();
+        var dataString="email="+email+"&password="+password+"&login=";
+        if($.trim(email).length>0 & $.trim(password).length>0)
+        {
+
+            window.location.href = "app.html";
+          /*  $.ajax({
+                type: "POST",
+                url: url,
+                data: dataString,
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                cache: false,
+                beforeSend: function(){ $("#login").html('Connecting...');},
+                success: function(data){
+                    if(data=="success")
+                    {
+                        localStorage.login="true";
+                        localStorage.email=email;
+                        window.location.href = "index.html";
+                    }
+                    else if(data="failed")
+                    {
+                        alert("Login error");
+                        $("#login").html('Login');
+                    }
+                }
+            }); */
+
+           /* $.postCORS(url,{ x : 1 }).done(function(obj){
+                if(obj.ok) {
+                    alert(obj);
+                }
+            }).fail(function(){
+                alert("Error!");
+            });
+
+            */
+        }
+        return false;
+    });
+
+    });
+</script>
 </body>
 </html>

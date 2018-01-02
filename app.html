@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/oauth-1.0a.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha1.js"></script>
+    <script src="bower_components/oauth-signature/dist/oauth-signature.js"></script>
+
+    <style> .tab {
+        /* width: 5% !important; */
+        clear: none !important;  /* Prevent line break */
+    }
+    </style>
+</head>
+
+
+<body>
+
+<!-- Start of first page -->
+<div data-role="page" id="orders">
+
+    <div data-role="header">
+        <h1>Foo</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+
+        <ul id="addMoreStuff" data-role="listview" data-inset="false">
+        </ul>
+
+    </div><!-- /content -->
+
+    <div data-role="footer">
+        <h4>Page Footer</h4>
+        <div data-role="navbar">
+            <ul>
+            <li class="tab"><a href="#orders" class="ui-btn-active ui-state-persist">One</a></li>
+            <li class="tab"><a href="#questions">Two</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of second page -->
+<div data-role="page" id="questions">
+
+    <div data-role="header">
+        <h1>Bar</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>
+        <p><a href="#foo">Back to foo</a></p>
+    </div><!-- /content -->
+
+    <div data-role="footer">
+        <h4>Page Footer</h4>
+        <div data-role="navbar">
+            <ul>
+                <li class="tab"><a href="#orders">One</a></li>
+                <li class="tab"><a href="#questions" class="ui-btn-active ui-state-persist">Two</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /page -->
+
+<script>
+    $(document).ready(function(){
+
+       // $.postCORS = function(url, data, func) { if(func == undefined) func = function(){}; return $.ajax({ type: 'POST', url: url, data: data, dataType: 'json', contentType: 'application/x-www-form-urlencoded', xhrFields: { withCredentials: true }, success: function(res) { func(res) }, error: function() { func({}) }}); }
+
+        var request = {
+            url: 'http://wp-liveshop.test/wp-json/wc/v2/orders',
+            method: 'GET'
+        };
+
+        //OAuth Protocol authentication parameters
+        var oauth = new OAuth({
+            consumer: {
+                //Consumer Public Key
+                public: 'ck_b5610e27512d8e0fc8adb9eb408fb94f13aa7d7f',
+                //Consumer Secrete Key
+                secret: 'cs_7548b1bd67b5679bfa4e340ccd0e51baf8124fcc'
+            },
+            //oauth1.0a protocol signature method
+            signature_method: 'HMAC-SHA1',
+            hash_function(base_string, secret) {
+                return CryptoJS.HmacSHA1(base_string, secret)
+            }
+        });
+
+        var oauth_data = {
+            oauth_consumer_key: oauth.consumer.public,
+            oauth_nonce: oauth.getNonce(),
+            oauth_signature_method: oauth.signature_method,
+            oauth_timestamp: oauth.getTimeStamp()
+        };
+
+        //Oauth signature
+        oauth_data.oauth_signature =  oauthSignature.generate(request.method,request.url,
+            oauth_data,oauth.consumer.secret );
+        console.log("Params : "+ JSON.stringify(oauth_data));
+
+        //  var deff=$q.defer();
+
+
+
+        //  var previous = null;
+        //   var current = null;
+        // setInterval(function(oauth_data, request) {
+        var request = $.ajax({
+            url: request.url,
+            method: request.method,
+            data: oauth_data,
+            dataType: "json"
+        });
+
+        request.done(function( msg ) {
+            console.log( msg );
+            //  current = JSON.stringify(msg);
+            //       if (previous && current && previous !== current) {
+            $.each( msg, function( i, val ) {
+
+                var items = '';
+                $.each( val.line_items, function( it, item ) {
+                    items +=  '<li>'+ item.name + '</li>';
+                });
+
+                $('#addMoreStuff').append(
+                    '<li data-role="collapsible" data-iconpos="right" data-inset="false" data-collapsed="false">' +
+                     '<h2>'+
+                    val.order_key +
+                    '</h2>'+
+                    '<ul data-role="listview">'+
+                        '<li data-role="collapsible" data-collapsed="false"  data-inset="false">'+
+                        '<ul data-role="listview" >' +
+                    '<li>'+
+                    val.billing.first_name + ' ' + val.billing.last_name +
+                    '</li>'+
+                    '<li>'+
+                    val.billing.email +
+                    '</li>'+
+                    '</ul>' +
+                        '</li>'+
+
+                    items +
+
+                    '</ul>'+
+                     '</li>'
+                ).trigger('create');
+                /*
+
+                 '<div>' +
+                    '<h3>' +
+                    val.order_key +
+                    '</h3>' +
+                    '<p>' +
+                    val.billing.email +
+                    '</p>' +
+                    '</div>'
+
+                */
+            });
+            //}
+
+            // previous = current;
+
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+        });
+
+
+
+        $("#login").click(function(){
+        var url = 'http://php-liveshop.test/';
+        var email=$("#email").val();
+        var password=$("#password").val();
+        var dataString="email="+email+"&password="+password+"&login=";
+        if($.trim(email).length>0 & $.trim(password).length>0)
+        {
+          /*  $.ajax({
+                type: "POST",
+                url: url,
+                data: dataString,
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                cache: false,
+                beforeSend: function(){ $("#login").html('Connecting...');},
+                success: function(data){
+                    if(data=="success")
+                    {
+                        localStorage.login="true";
+                        localStorage.email=email;
+                        window.location.href = "index.html";
+                    }
+                    else if(data="failed")
+                    {
+                        alert("Login error");
+                        $("#login").html('Login');
+                    }
+                }
+            }); */
+
+           /* $.postCORS(url,{ x : 1 }).done(function(obj){
+                if(obj.ok) {
+                    alert(obj);
+                }
+            }).fail(function(){
+                alert("Error!");
+            });
+
+            */
+        }
+        return false;
+    });
+
+    });
+</script>
+</body>
+</html>
