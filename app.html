@@ -129,8 +129,11 @@
 
                 var items = '';
                 $.each( val.line_items, function( it, item ) {
-                    items +=  '<li>'+ item.name + '</li>';
+                    items +=  '<p>'+  item.quantity + 'x ' + item.name + ' ' +  item.subtotal + '</p>';
                 });
+
+
+
 
                 $('#addMoreStuff').append(
                     '<li data-role="collapsible" data-iconpos="right" data-inset="false" data-collapsed="false">' +
@@ -141,17 +144,23 @@
                         '<li data-role="collapsible" data-collapsed="false"  data-inset="false">'+
                         '<ul data-role="listview" >' +
                     '<li>'+
-                    val.billing.first_name + ' ' + val.billing.last_name +
+                    '<strong>' +  val.billing.first_name + ' ' + val.billing.last_name + '</strong>' + '<br>' +
+                    val.billing.address_1 + ' ' + val.billing.address_2 + '<br>' +
+                    val.billing.postcode + ' ' + val.billing.city  +
                     '</li>'+
                     '<li>'+
-                    val.billing.email +
+                    'Email: ' + val.billing.email + '<br>' +
+                    'Sími: ' +  val.billing.phone +
                     '</li>'+
+'<li>'+
+                    items +
+                        '</li>'+
                     '</ul>' +
                         '</li>'+
 
-                    items +
 
                     '</ul>'+
+
                      '</li>'
                 ).trigger('create');
                 /*

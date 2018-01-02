@@ -46,7 +46,10 @@
         if($.trim(email).length>0 & $.trim(password).length>0)
         {
 
-            window.location.href = "app.html";
+            if(email = '1thorarinn@gmail.com' && password == 1234){
+                window.location.href = "app.html";
+            }
+
           /*  $.ajax({
                 type: "POST",
                 url: url,
