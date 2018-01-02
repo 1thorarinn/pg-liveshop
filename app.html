@@ -90,7 +90,7 @@
             },
             //oauth1.0a protocol signature method
             signature_method: 'HMAC-SHA1',
-            hash_function(base_string, secret) {
+            hash_function: function(base_string, secret) {
                 return CryptoJS.HmacSHA1(base_string, secret)
             }
         });
