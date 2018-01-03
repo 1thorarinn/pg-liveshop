@@ -136,7 +136,9 @@
 
         request.done(function( msg ) {
             console.log( msg );
-            $('addMoreStuff').empty();
+            var html=".....";
+            $('#addMoreStuff').html(html);
+            $('#addMoreStuff').empty();
             //  current = JSON.stringify(msg);
             //       if (previous && current && previous !== current) {
             $.each( msg, function( i, val ) {
@@ -218,6 +220,8 @@
             //$( this ).addClass( "done" );
             //document.write( 'There was an error attempting to access the API - ' + data.status + ': ' + data.response );
             console.log(data);
+            var html=".....";
+            $('#questionsListView').html(html);
             $('#questionsListView').empty();
             $.each( data, function( i, item ) {
                // $.each( item, function( it, val ) {
