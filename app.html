@@ -136,6 +136,7 @@
 
         request.done(function( msg ) {
             console.log( msg );
+            $('addMoreStuff').empty();
             //  current = JSON.stringify(msg);
             //       if (previous && current && previous !== current) {
             $.each( msg, function( i, val ) {
@@ -208,6 +209,7 @@
         $.ajax({
             url: 'http://tmstesting.wpengine.com/wp-json/liveshop/v2/questions',
             method: 'GET',
+            cache: false,
             crossDomain: true,
 
             //     context: document.body,
@@ -216,11 +218,12 @@
             //$( this ).addClass( "done" );
             //document.write( 'There was an error attempting to access the API - ' + data.status + ': ' + data.response );
             console.log(data);
+            $('#questionsListView').empty();
             $.each( data, function( i, item ) {
                // $.each( item, function( it, val ) {
 
                 $('#questionsListView').append(
-                    '<li data-role="collapsible" data-iconpos="right" data-inset="false" data-collapsed="false">' +
+                    '<li data-role="collapsible" data-iconpos="right" data-inset="false" data-collapsed="false" rel="item-id-'+ item["id"] +'">' +
                     '<h2>'+
                     item["1"] +
                     '</h2>'+
